@@ -2,16 +2,16 @@ import { StyleSheet, ScrollView, Pressable } from 'react-native';
 import { View, Text } from 'react-native';
 import { Link } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { useShallow } from 'zustand/react/shallow';
 import { useThemeColors } from '@/src/hooks/useThemeColors';
 import { useTrackerStore } from '@/src/stores/useTrackerStore';
 import { spacing, borderRadius, typography } from '@/src/theme';
 import { SobrietyCounter } from '@/src/components/counter/SobrietyCounter';
-import { ADDICTION_LABELS } from '@/src/models/tracker';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
   const theme = useThemeColors();
-  const trackers = useTrackerStore((s) => s.trackers.filter((t) => !t.isArchived));
+  const trackers = useTrackerStore(useShallow((s) => s.trackers.filter((t) => !t.isArchived)));
   const primaryId = useTrackerStore((s) => s.primaryTrackerId);
 
   const primaryTracker = trackers.find((t) => t.id === primaryId);
@@ -19,7 +19,7 @@ export default function HomeScreen() {
 
   return (
     <ScrollView
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={{ flex: 1, backgroundColor: theme.background }}
       contentContainerStyle={styles.content}
     >
       <Text style={[typography.h1, styles.title, { color: theme.text }]}>
@@ -44,7 +44,7 @@ export default function HomeScreen() {
       ))}
 
       <Link href="/counter/setup" asChild>
-        <Pressable style={[styles.addButton, { backgroundColor: theme.primary }]}>
+        <Pressable style={StyleSheet.flatten([styles.addButton, { backgroundColor: theme.primary }])}>
           <Text style={[typography.body, { color: '#FFFFFF', fontWeight: '600' }]}>
             + {t('home.addTracker')}
           </Text>

@@ -15,7 +15,7 @@ export default function SettingsScreen() {
 
   return (
     <ScrollView
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={{ flex: 1, backgroundColor: theme.background }}
       contentContainerStyle={styles.content}
     >
       <Text style={[typography.h2, { color: theme.text, marginBottom: spacing.md }]}>

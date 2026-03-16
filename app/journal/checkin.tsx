@@ -38,7 +38,7 @@ export default function CheckInScreen() {
 
   return (
     <ScrollView
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={{ flex: 1, backgroundColor: theme.background }}
       contentContainerStyle={styles.content}
     >
       {/* Mood */}

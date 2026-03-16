@@ -15,13 +15,13 @@ export default function JournalScreen() {
 
   return (
     <ScrollView
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={{ flex: 1, backgroundColor: theme.background }}
       contentContainerStyle={styles.content}
     >
       <View style={styles.header}>
         <Text style={[typography.h1, { color: theme.text }]}>{t('journal.title')}</Text>
         <Link href="/journal/checkin" asChild>
-          <Pressable style={[styles.checkInButton, { backgroundColor: theme.primary }]}>
+          <Pressable style={StyleSheet.flatten([styles.checkInButton, { backgroundColor: theme.primary }])}>
             <Text style={[typography.body, { color: '#FFFFFF', fontWeight: '600' }]}>
               + {t('journal.checkIn')}
             </Text>

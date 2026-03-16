@@ -23,7 +23,7 @@ export default function ProgressScreen() {
 
   return (
     <ScrollView
-      style={[styles.container, { backgroundColor: theme.background }]}
+      style={{ flex: 1, backgroundColor: theme.background }}
       contentContainerStyle={styles.content}
     >
       <Text style={[typography.h1, { color: theme.text, marginBottom: spacing.lg }]}>
