@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(git init:*)",
-      "Read(//Users/lunarity/Projects/LUNARITY/**)",
-      "Bash(npx create-expo-app@latest PureMind --template tabs)"
-    ]
-  }
-}
