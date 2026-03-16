@@ -1,0 +1,83 @@
+{
+  "tabs": {
+    "home": "Home",
+    "knowledge": "Learn",
+    "journal": "Journal",
+    "progress": "Progress",
+    "help": "Help"
+  },
+  "home": {
+    "title": "Your Journey",
+    "addTracker": "Add Tracker",
+    "noTrackers": "Start tracking your recovery journey",
+    "noTrackersSubtitle": "Tap the button below to add your first tracker",
+    "days": "days",
+    "hours": "hrs",
+    "minutes": "min",
+    "seconds": "sec",
+    "currentStreak": "Current Streak",
+    "longestStreak": "Longest Streak",
+    "totalResets": "Fresh Starts"
+  },
+  "counter": {
+    "setupTitle": "New Tracker",
+    "selectType": "What are you leaving behind?",
+    "startDate": "When did you start?",
+    "startNow": "Starting now",
+    "customLabel": "Custom name (optional)",
+    "create": "Begin My Journey",
+    "reset": {
+      "title": "Start Fresh",
+      "message": "Starting fresh takes courage. Your progress is never truly lost — every sober moment matters.",
+      "notePrompt": "Want to write a note? (optional)",
+      "confirm": "Reset Counter",
+      "cancel": "Keep Going"
+    }
+  },
+  "journal": {
+    "title": "Journal",
+    "checkIn": "Check In",
+    "emptyState": "When you're ready, this is your safe space to reflect.",
+    "mood": "How are you feeling?",
+    "craving": "Craving intensity",
+    "triggers": "Any triggers today?",
+    "notes": "Anything on your mind?",
+    "notesPlaceholder": "Write your thoughts here...",
+    "save": "Save Check-In",
+    "highCraving": "You're feeling strong cravings right now. That takes strength to acknowledge."
+  },
+  "knowledge": {
+    "title": "Learn",
+    "emptyState": "Educational content coming soon"
+  },
+  "progress": {
+    "title": "Progress",
+    "achievements": "Achievements",
+    "onYourWay": "You're on your way",
+    "earned": "Earned!"
+  },
+  "help": {
+    "title": "Get Help",
+    "emergency": "Need help right now?",
+    "callNow": "Call Now",
+    "visitWebsite": "Visit Website",
+    "available24h": "Available 24/7",
+    "disclaimer": "If you are in immediate danger, please call your local emergency number."
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "language": "Language",
+    "notifications": "Notifications",
+    "dailyReminder": "Daily Check-in Reminder",
+    "about": "About",
+    "privacy": "Your data never leaves this device."
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back"
+  }
+}

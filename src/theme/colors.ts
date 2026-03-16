@@ -1,0 +1,38 @@
+export const colors = {
+  light: {
+    background: '#F7F5F0',
+    surface: '#FFFFFF',
+    primary: '#5B8A72',
+    primaryLight: '#8FBFA8',
+    secondary: '#C4956A',
+    accent: '#7B9EC4',
+    text: '#2D3436',
+    textSecondary: '#636E72',
+    success: '#6AB187',
+    warning: '#E8A87C',
+    danger: '#D4726A',
+    border: '#E0DDD8',
+    tabBar: '#FFFFFF',
+    tabIconDefault: '#636E72',
+    tabIconSelected: '#5B8A72',
+  },
+  dark: {
+    background: '#1A1D21',
+    surface: '#252830',
+    primary: '#7BAF96',
+    primaryLight: '#3D5E4C',
+    secondary: '#D4A87C',
+    accent: '#8FAED4',
+    text: '#E8E6E1',
+    textSecondary: '#9BA0A5',
+    success: '#7BC19A',
+    warning: '#F0B88C',
+    danger: '#E08A82',
+    border: '#353840',
+    tabBar: '#252830',
+    tabIconDefault: '#9BA0A5',
+    tabIconSelected: '#7BAF96',
+  },
+};
+
+export type ThemeColors = typeof colors.light;
