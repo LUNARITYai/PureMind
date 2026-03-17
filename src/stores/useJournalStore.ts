@@ -1,8 +1,9 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { v4 as uuid } from 'uuid';
 import { JournalEntry, Mood, TriggerTag } from '@/src/models/journal';
+
+const uuid = () => crypto.randomUUID();
 
 interface CheckInData {
   mood: Mood;

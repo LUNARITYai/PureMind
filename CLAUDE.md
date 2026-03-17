@@ -22,17 +22,20 @@ Expo Router file-based routing. Root layout (`app/_layout.tsx`) handles fonts, s
 ### State Management (`src/stores/`)
 Zustand stores with `persist` middleware backed by AsyncStorage. Each store uses a namespaced key (`puremind:trackers`, etc.). Stores: `useTrackerStore`, `useJournalStore`, `useAchievementStore`, `useSettingsStore`.
 
-### Theme (`src/theme/`)
-Custom color palette in `colors.ts` with light/dark variants. `useThemeColors` hook resolves current theme colors based on user setting (light/dark/system). Fonts: SpaceMono (counter), system fonts elsewhere. Navigation themes are mapped in `app/_layout.tsx`.
+### Styling (NativeWind v4)
+NativeWind v4 (Tailwind CSS for RN) with `className` props. Config: `tailwind.config.ts`, `global.css` (CSS variables for light/dark), `metro.config.js` (withNativeWind wrapper). Monochromatic black/white palette using shadcn-style CSS variables (background, foreground, card, primary, muted, destructive, border). Use `cn()` from `src/lib/utils.ts` for conditional classes.
+
+### UI Components (`src/components/ui/`)
+Reusable primitives inspired by shadcn/react-native-reusables: Text, Button, Card, Input, Badge, Separator. Use these instead of raw RN components for consistent styling. `Text` component auto-applies `text-foreground` color.
+
+### Dark Mode
+NativeWind's `useColorScheme` is bridged with Zustand `useSettingsStore` in `app/_layout.tsx`. `@react-navigation/native` ThemeProvider handles nav chrome. For SVG elements (which don't support `className`), use `useThemeValues()` hook from `src/hooks/useThemeValues.ts` to get resolved hex colors.
 
 ### i18n (`src/i18n/`)
 i18next with react-i18next. English only for v1; Polish planned later. UI strings in `src/i18n/en.json`.
 
 ### Path Aliases
 `@/*` maps to project root (configured in `tsconfig.json`). Use `@/src/...` for source imports, `@/assets/...` for assets.
-
-### Legacy Scaffold
-`components/` and `constants/` at root are leftover from the Expo template. Active code lives under `src/components/`, `src/theme/`, etc.
 
 ## UX Guidelines
 

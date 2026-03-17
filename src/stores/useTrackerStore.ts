@@ -1,8 +1,9 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { v4 as uuid } from 'uuid';
 import { differenceInDays } from 'date-fns';
+
+const uuid = () => crypto.randomUUID();
 import { Tracker, AddictionType } from '@/src/models/tracker';
 
 interface TrackerState {

@@ -1,24 +1,34 @@
 import React from 'react';
-import { Tabs } from 'expo-router';
+import { Pressable } from 'react-native';
+import { Tabs, useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
-import { useThemeColors } from '@/src/hooks/useThemeColors';
+import { useColorScheme } from 'nativewind';
 
 export default function TabLayout() {
-  const theme = useThemeColors();
+  const { colorScheme } = useColorScheme();
+  const router = useRouter();
+  const isDark = colorScheme === 'dark';
+
+  const activeTint = isDark ? '#FFFFFF' : '#0A0A0A';
+  const inactiveTint = isDark ? '#555555' : '#737373';
+  const tabBarBg = isDark ? '#000000' : '#FFFFFF';
+  const borderColor = isDark ? 'transparent' : '#E5E5E5';
+  const headerBg = isDark ? '#000000' : '#FFFFFF';
+  const headerTint = isDark ? '#FFFFFF' : '#0A0A0A';
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: theme.primary,
-        tabBarInactiveTintColor: theme.tabIconDefault,
+        tabBarActiveTintColor: activeTint,
+        tabBarInactiveTintColor: inactiveTint,
         tabBarStyle: {
-          backgroundColor: theme.tabBar,
-          borderTopColor: theme.border,
+          backgroundColor: tabBarBg,
+          borderTopColor: borderColor,
         },
         headerStyle: {
-          backgroundColor: theme.surface,
+          backgroundColor: headerBg,
         },
-        headerTintColor: theme.text,
+        headerTintColor: headerTint,
       }}
     >
       <Tabs.Screen
@@ -31,6 +41,18 @@ export default function TabLayout() {
               tintColor={color}
               size={24}
             />
+          ),
+          headerRight: () => (
+            <Pressable
+              onPress={() => router.push('/settings')}
+              style={{ marginRight: 16 }}
+            >
+              <SymbolView
+                name={{ ios: 'gearshape', android: 'settings', web: 'settings' }}
+                tintColor={headerTint}
+                size={22}
+              />
+            </Pressable>
           ),
         }}
       />

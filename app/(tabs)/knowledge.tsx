@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View, Text } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useThemeColors } from '@/src/hooks/useThemeColors';
-import { spacing, borderRadius, typography } from '@/src/theme';
+import { Text } from '@/src/components/ui/text';
 
 const CATEGORIES = [
   { id: 'understanding', title: 'Understanding Addiction', description: 'What addiction is and how it works', icon: '🧠' },
@@ -15,49 +14,35 @@ const CATEGORIES = [
 
 export default function KnowledgeScreen() {
   const { t } = useTranslation();
-  const theme = useThemeColors();
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: theme.background }}
-      contentContainerStyle={styles.content}
+      className="flex-1 bg-background"
+      contentContainerClassName="p-6 pb-12"
     >
-      <Text style={[typography.h1, { color: theme.text, marginBottom: spacing.lg }]}>
+      <Text className="text-[28px] font-bold leading-[34px] mb-6">
         {t('knowledge.title')}
       </Text>
 
       {CATEGORIES.map((cat) => (
         <View
           key={cat.id}
-          style={[styles.categoryCard, { backgroundColor: theme.surface, borderColor: theme.border }]}
+          className="flex-row items-center rounded-xl border border-border bg-card p-4 mb-2"
         >
-          <Text style={{ fontSize: 32 }}>{cat.icon}</Text>
-          <View style={{ flex: 1, marginLeft: spacing.md }}>
-            <Text style={[typography.h3, { color: theme.text }]}>{cat.title}</Text>
-            <Text style={[typography.caption, { color: theme.textSecondary, marginTop: 2 }]}>
+          <Text className="text-[32px]">{cat.icon}</Text>
+          <View className="flex-1 ml-4">
+            <Text className="text-lg font-semibold">{cat.title}</Text>
+            <Text className="text-sm text-muted-foreground mt-0.5">
               {cat.description}
             </Text>
           </View>
-          <Text style={{ color: theme.textSecondary, fontSize: 18 }}>→</Text>
+          <Text className="text-muted-foreground text-lg">→</Text>
         </View>
       ))}
 
-      <Text style={[typography.caption, { color: theme.textSecondary, textAlign: 'center', marginTop: spacing.lg }]}>
+      <Text className="text-sm text-muted-foreground text-center mt-6">
         More content coming soon. Your journey of learning never ends.
       </Text>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  content: { padding: spacing.lg, paddingBottom: spacing.xxl },
-  categoryCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: spacing.md,
-    borderRadius: borderRadius.md,
-    borderWidth: 1,
-    marginBottom: spacing.sm,
-  },
-});

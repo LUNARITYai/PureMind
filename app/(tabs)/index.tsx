@@ -1,16 +1,14 @@
-import { StyleSheet, ScrollView, Pressable } from 'react-native';
-import { View, Text } from 'react-native';
+import { ScrollView, View, Pressable } from 'react-native';
 import { Link } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useShallow } from 'zustand/react/shallow';
-import { useThemeColors } from '@/src/hooks/useThemeColors';
 import { useTrackerStore } from '@/src/stores/useTrackerStore';
-import { spacing, borderRadius, typography } from '@/src/theme';
 import { SobrietyCounter } from '@/src/components/counter/SobrietyCounter';
+import { Text } from '@/src/components/ui/text';
+import { Button } from '@/src/components/ui/button';
 
 export default function HomeScreen() {
   const { t } = useTranslation();
-  const theme = useThemeColors();
   const trackers = useTrackerStore(useShallow((s) => s.trackers.filter((t) => !t.isArchived)));
   const primaryId = useTrackerStore((s) => s.primaryTrackerId);
 
@@ -19,21 +17,21 @@ export default function HomeScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: theme.background }}
-      contentContainerStyle={styles.content}
+      className="flex-1 bg-background"
+      contentContainerClassName="p-6 pb-12"
     >
-      <Text style={[typography.h1, styles.title, { color: theme.text }]}>
+      <Text className="text-[28px] font-bold leading-[34px] mb-6">
         {t('home.title')}
       </Text>
 
       {primaryTracker ? (
         <SobrietyCounter tracker={primaryTracker} isPrimary />
       ) : (
-        <View style={[styles.emptyState, { backgroundColor: theme.surface, borderColor: theme.border }]}>
-          <Text style={[typography.h3, { color: theme.text, textAlign: 'center' }]}>
+        <View className="rounded-2xl border border-dashed border-border items-center p-8 mb-6">
+          <Text className="text-lg font-semibold text-center">
             {t('home.noTrackers')}
           </Text>
-          <Text style={[typography.body, styles.emptySubtitle, { color: theme.textSecondary }]}>
+          <Text className="text-base text-muted-foreground text-center mt-2">
             {t('home.noTrackersSubtitle')}
           </Text>
         </View>
@@ -44,33 +42,10 @@ export default function HomeScreen() {
       ))}
 
       <Link href="/counter/setup" asChild>
-        <Pressable style={StyleSheet.flatten([styles.addButton, { backgroundColor: theme.primary }])}>
-          <Text style={[typography.body, { color: '#FFFFFF', fontWeight: '600' }]}>
-            + {t('home.addTracker')}
-          </Text>
-        </Pressable>
+        <Button className="mt-4">
+          <Text>+ {t('home.addTracker')}</Text>
+        </Button>
       </Link>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  content: { padding: spacing.lg, paddingBottom: spacing.xxl },
-  title: { marginBottom: spacing.lg },
-  emptyState: {
-    padding: spacing.xl,
-    borderRadius: borderRadius.lg,
-    borderWidth: 1,
-    borderStyle: 'dashed',
-    alignItems: 'center',
-    marginBottom: spacing.lg,
-  },
-  emptySubtitle: { marginTop: spacing.sm, textAlign: 'center' },
-  addButton: {
-    padding: spacing.md,
-    borderRadius: borderRadius.md,
-    alignItems: 'center',
-    marginTop: spacing.md,
-  },
-});

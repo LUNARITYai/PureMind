@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, View, Text, Pressable, TextInput } from 'react-native';
-import { useThemeColors } from '@/src/hooks/useThemeColors';
+import { Modal, View, Pressable } from 'react-native';
 import { useTrackerStore } from '@/src/stores/useTrackerStore';
-import { spacing, borderRadius, typography } from '@/src/theme';
 import { useTranslation } from 'react-i18next';
+import { Text } from '@/src/components/ui/text';
+import { Input } from '@/src/components/ui/input';
+import { Button } from '@/src/components/ui/button';
 
 interface Props {
   visible: boolean;
@@ -13,7 +14,6 @@ interface Props {
 
 export function ResetModal({ visible, onClose, trackerId }: Props) {
   const { t } = useTranslation();
-  const theme = useThemeColors();
   const resetTracker = useTrackerStore((s) => s.resetTracker);
   const [note, setNote] = useState('');
 
@@ -25,86 +25,46 @@ export function ResetModal({ visible, onClose, trackerId }: Props) {
 
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-      <View style={styles.overlay}>
-        <View style={[styles.modal, { backgroundColor: theme.surface }]}>
-          <Text style={[typography.h2, { color: theme.text, textAlign: 'center' }]}>
+      <View className="flex-1 justify-center p-6 bg-black/50">
+        <View className="rounded-2xl bg-card p-6">
+          <Text className="text-2xl font-semibold text-center">
             {t('counter.reset.title')}
           </Text>
 
-          <Text style={[typography.body, styles.message, { color: theme.textSecondary }]}>
+          <Text className="text-base text-muted-foreground text-center mt-4 leading-[22px]">
             {t('counter.reset.message')}
           </Text>
 
-          <Text style={[typography.caption, { color: theme.textSecondary, marginTop: spacing.md }]}>
+          <Text className="text-sm text-muted-foreground mt-4">
             {t('counter.reset.notePrompt')}
           </Text>
-          <TextInput
-            style={[styles.input, { color: theme.text, borderColor: theme.border, backgroundColor: theme.background }]}
+          <Input
+            className="mt-2 min-h-[80px] py-3"
+            style={{ textAlignVertical: 'top' }}
             value={note}
             onChangeText={setNote}
             placeholder="..."
-            placeholderTextColor={theme.textSecondary}
             multiline
           />
 
-          <View style={styles.buttons}>
-            <Pressable
-              style={[styles.button, { backgroundColor: theme.background, borderColor: theme.border, borderWidth: 1 }]}
+          <View className="flex-row gap-2 mt-6">
+            <Button
+              variant="outline"
+              className="flex-1"
               onPress={onClose}
             >
-              <Text style={[typography.body, { color: theme.text, fontWeight: '600' }]}>
-                {t('counter.reset.cancel')}
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[styles.button, { backgroundColor: theme.danger }]}
+              <Text>{t('counter.reset.cancel')}</Text>
+            </Button>
+            <Button
+              variant="destructive"
+              className="flex-1"
               onPress={handleReset}
             >
-              <Text style={[typography.body, { color: '#FFFFFF', fontWeight: '600' }]}>
-                {t('counter.reset.confirm')}
-              </Text>
-            </Pressable>
+              <Text>{t('counter.reset.confirm')}</Text>
+            </Button>
           </View>
         </View>
       </View>
     </Modal>
   );
 }
-
-const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    padding: spacing.lg,
-  },
-  modal: {
-    borderRadius: borderRadius.lg,
-    padding: spacing.lg,
-  },
-  message: {
-    marginTop: spacing.md,
-    textAlign: 'center',
-    lineHeight: 22,
-  },
-  input: {
-    marginTop: spacing.sm,
-    borderWidth: 1,
-    borderRadius: borderRadius.sm,
-    padding: spacing.md,
-    minHeight: 80,
-    textAlignVertical: 'top',
-    fontSize: 16,
-  },
-  buttons: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    marginTop: spacing.lg,
-  },
-  button: {
-    flex: 1,
-    padding: spacing.md,
-    borderRadius: borderRadius.md,
-    alignItems: 'center',
-  },
-});

@@ -1,13 +1,12 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View, Text, Pressable } from 'react-native';
+import { ScrollView, View, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useThemeColors } from '@/src/hooks/useThemeColors';
 import { useSettingsStore } from '@/src/stores/useSettingsStore';
-import { spacing, borderRadius, typography } from '@/src/theme';
+import { Text } from '@/src/components/ui/text';
+import { cn } from '@/src/lib/utils';
 
 export default function SettingsScreen() {
   const { t } = useTranslation();
-  const theme = useThemeColors();
   const currentTheme = useSettingsStore((s) => s.theme);
   const setTheme = useSettingsStore((s) => s.setTheme);
 
@@ -15,33 +14,32 @@ export default function SettingsScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: theme.background }}
-      contentContainerStyle={styles.content}
+      className="flex-1 bg-background"
+      contentContainerClassName="p-6 pb-12"
     >
-      <Text style={[typography.h2, { color: theme.text, marginBottom: spacing.md }]}>
+      <Text className="text-2xl font-semibold mb-4">
         {t('settings.theme')}
       </Text>
-      <View style={styles.optionRow}>
+
+      <View className="flex-row gap-2 mb-8">
         {themeOptions.map((opt) => (
           <Pressable
             key={opt}
-            style={[
-              styles.optionButton,
-              {
-                backgroundColor: currentTheme === opt ? theme.primary : theme.surface,
-                borderColor: currentTheme === opt ? theme.primary : theme.border,
-              },
-            ]}
+            className={cn(
+              'flex-1 items-center rounded-xl border p-4',
+              currentTheme === opt
+                ? 'bg-primary border-primary'
+                : 'bg-card border-border'
+            )}
             onPress={() => setTheme(opt)}
           >
             <Text
-              style={[
-                typography.body,
-                {
-                  color: currentTheme === opt ? '#FFFFFF' : theme.text,
-                  fontWeight: currentTheme === opt ? '600' : '400',
-                },
-              ]}
+              className={cn(
+                'text-base',
+                currentTheme === opt
+                  ? 'text-primary-foreground font-semibold'
+                  : 'text-foreground'
+              )}
             >
               {opt.charAt(0).toUpperCase() + opt.slice(1)}
             </Text>
@@ -49,29 +47,11 @@ export default function SettingsScreen() {
         ))}
       </View>
 
-      <View style={[styles.privacyBanner, { backgroundColor: theme.success + '15', borderColor: theme.success }]}>
-        <Text style={[typography.body, { color: theme.success, fontWeight: '600' }]}>
+      <View className="rounded-xl border border-border bg-card p-4">
+        <Text className="font-semibold text-muted-foreground">
           🔒 {t('settings.privacy')}
         </Text>
       </View>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  content: { padding: spacing.lg, paddingBottom: spacing.xxl },
-  optionRow: { flexDirection: 'row', gap: spacing.sm, marginBottom: spacing.xl },
-  optionButton: {
-    flex: 1,
-    padding: spacing.md,
-    borderRadius: borderRadius.md,
-    borderWidth: 1,
-    alignItems: 'center',
-  },
-  privacyBanner: {
-    padding: spacing.md,
-    borderRadius: borderRadius.md,
-    borderWidth: 1,
-  },
-});

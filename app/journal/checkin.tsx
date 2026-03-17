@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, View, Text, Pressable, TextInput } from 'react-native';
+import { ScrollView, View, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { useThemeColors } from '@/src/hooks/useThemeColors';
 import { useJournalStore } from '@/src/stores/useJournalStore';
 import { Mood, TriggerTag, MOOD_EMOJIS, MOOD_LABELS, TRIGGER_LABELS } from '@/src/models/journal';
-import { spacing, borderRadius, typography } from '@/src/theme';
+import { Text } from '@/src/components/ui/text';
+import { Input } from '@/src/components/ui/input';
+import { Button } from '@/src/components/ui/button';
+import { cn } from '@/src/lib/utils';
 
 const MOODS: Mood[] = [1, 2, 3, 4, 5];
 const TRIGGERS: TriggerTag[] = [
@@ -15,7 +17,6 @@ const TRIGGERS: TriggerTag[] = [
 
 export default function CheckInScreen() {
   const { t } = useTranslation();
-  const theme = useThemeColors();
   const router = useRouter();
   const addCheckIn = useJournalStore((s) => s.addCheckIn);
 
@@ -38,26 +39,30 @@ export default function CheckInScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: theme.background }}
-      contentContainerStyle={styles.content}
+      className="flex-1 bg-background"
+      contentContainerClassName="p-6 pb-12"
     >
       {/* Mood */}
-      <Text style={[typography.h2, { color: theme.text }]}>{t('journal.mood')}</Text>
-      <View style={styles.moodRow}>
+      <Text className="text-2xl font-semibold">{t('journal.mood')}</Text>
+      <View className="flex-row gap-2 mt-4">
         {MOODS.map((m) => (
           <Pressable
             key={m}
-            style={[
-              styles.moodButton,
-              {
-                backgroundColor: mood === m ? theme.primaryLight : theme.surface,
-                borderColor: mood === m ? theme.primary : theme.border,
-              },
-            ]}
+            className={cn(
+              'flex-1 items-center py-4 rounded-xl border',
+              mood === m
+                ? 'bg-primary/10 border-primary'
+                : 'bg-card border-border'
+            )}
             onPress={() => setMood(m)}
           >
-            <Text style={{ fontSize: 32 }}>{MOOD_EMOJIS[m]}</Text>
-            <Text style={[typography.small, { color: mood === m ? theme.primary : theme.textSecondary }]}>
+            <Text className="text-[32px]">{MOOD_EMOJIS[m]}</Text>
+            <Text
+              className={cn(
+                'text-xs mt-1',
+                mood === m ? 'text-foreground' : 'text-muted-foreground'
+              )}
+            >
               {MOOD_LABELS[m]}
             </Text>
           </Pressable>
@@ -65,57 +70,59 @@ export default function CheckInScreen() {
       </View>
 
       {/* Craving */}
-      <Text style={[typography.h2, { color: theme.text, marginTop: spacing.lg }]}>
+      <Text className="text-2xl font-semibold mt-6">
         {t('journal.craving')}
       </Text>
-      <View style={styles.cravingRow}>
+      <View className="flex-row gap-1 mt-4">
         {Array.from({ length: 11 }, (_, i) => (
           <Pressable
             key={i}
-            style={[
-              styles.cravingDot,
-              {
-                backgroundColor: i <= craving
-                  ? i > 7 ? theme.danger : i > 4 ? theme.warning : theme.success
-                  : theme.border,
-              },
-            ]}
+            className={cn(
+              'flex-1 aspect-square max-w-[32px] max-h-[32px] rounded-full items-center justify-center',
+              i <= craving
+                ? i > 7 ? 'bg-destructive' : i > 4 ? 'bg-muted-foreground' : 'bg-foreground'
+                : 'bg-border'
+            )}
             onPress={() => setCraving(i)}
           >
-            <Text style={[typography.small, { color: i <= craving ? '#FFF' : theme.textSecondary }]}>
+            <Text
+              className={cn(
+                'text-xs',
+                i <= craving ? 'text-background' : 'text-muted-foreground'
+              )}
+            >
               {i}
             </Text>
           </Pressable>
         ))}
       </View>
       {craving > 7 && (
-        <Text style={[typography.caption, { color: theme.warning, marginTop: spacing.sm }]}>
+        <Text className="text-sm text-destructive mt-2">
           {t('journal.highCraving')}
         </Text>
       )}
 
       {/* Triggers */}
-      <Text style={[typography.h2, { color: theme.text, marginTop: spacing.lg }]}>
+      <Text className="text-2xl font-semibold mt-6">
         {t('journal.triggers')}
       </Text>
-      <View style={styles.triggerGrid}>
+      <View className="flex-row flex-wrap gap-2 mt-4">
         {TRIGGERS.map((tag) => (
           <Pressable
             key={tag}
-            style={[
-              styles.triggerChip,
-              {
-                backgroundColor: triggers.includes(tag) ? theme.primary : theme.surface,
-                borderColor: triggers.includes(tag) ? theme.primary : theme.border,
-              },
-            ]}
+            className={cn(
+              'rounded-full border px-4 py-2',
+              triggers.includes(tag)
+                ? 'bg-primary border-primary'
+                : 'bg-card border-border'
+            )}
             onPress={() => toggleTrigger(tag)}
           >
             <Text
-              style={[
-                typography.caption,
-                { color: triggers.includes(tag) ? '#FFFFFF' : theme.text },
-              ]}
+              className={cn(
+                'text-sm',
+                triggers.includes(tag) ? 'text-primary-foreground' : 'text-foreground'
+              )}
             >
               {TRIGGER_LABELS[tag]}
             </Text>
@@ -124,76 +131,26 @@ export default function CheckInScreen() {
       </View>
 
       {/* Notes */}
-      <Text style={[typography.h2, { color: theme.text, marginTop: spacing.lg }]}>
+      <Text className="text-2xl font-semibold mt-6">
         {t('journal.notes')}
       </Text>
-      <TextInput
-        style={[styles.notesInput, { color: theme.text, borderColor: theme.border, backgroundColor: theme.surface }]}
+      <Input
+        className="mt-4 min-h-[120px] py-3"
+        style={{ textAlignVertical: 'top' }}
         value={notes}
         onChangeText={setNotes}
         placeholder={t('journal.notesPlaceholder')}
-        placeholderTextColor={theme.textSecondary}
         multiline
       />
 
       {/* Save */}
-      <Pressable
-        style={[
-          styles.saveButton,
-          { backgroundColor: mood ? theme.primary : theme.border, opacity: mood ? 1 : 0.5 },
-        ]}
+      <Button
+        className="mt-8"
         onPress={handleSave}
         disabled={!mood}
       >
-        <Text style={[typography.body, { color: '#FFFFFF', fontWeight: '700' }]}>
-          {t('journal.save')}
-        </Text>
-      </Pressable>
+        <Text>{t('journal.save')}</Text>
+      </Button>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  content: { padding: spacing.lg, paddingBottom: spacing.xxl },
-  moodRow: { flexDirection: 'row', gap: spacing.sm, marginTop: spacing.md },
-  moodButton: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: spacing.md,
-    borderRadius: borderRadius.md,
-    borderWidth: 1,
-  },
-  cravingRow: { flexDirection: 'row', gap: spacing.xs, marginTop: spacing.md },
-  cravingDot: {
-    flex: 1,
-    aspectRatio: 1,
-    borderRadius: borderRadius.full,
-    alignItems: 'center',
-    justifyContent: 'center',
-    maxWidth: 32,
-    maxHeight: 32,
-  },
-  triggerGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm, marginTop: spacing.md },
-  triggerChip: {
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.md,
-    borderRadius: borderRadius.full,
-    borderWidth: 1,
-  },
-  notesInput: {
-    marginTop: spacing.md,
-    borderWidth: 1,
-    borderRadius: borderRadius.md,
-    padding: spacing.md,
-    minHeight: 120,
-    textAlignVertical: 'top',
-    fontSize: 16,
-  },
-  saveButton: {
-    marginTop: spacing.xl,
-    padding: spacing.md,
-    borderRadius: borderRadius.md,
-    alignItems: 'center',
-  },
-});

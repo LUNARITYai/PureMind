@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { View, Pressable } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
-import { useThemeColors } from '@/src/hooks/useThemeColors';
 import { useElapsedTime } from '@/src/hooks/useElapsedTime';
+import { useThemeValues } from '@/src/hooks/useThemeValues';
 import { useTrackerStore } from '@/src/stores/useTrackerStore';
 import { Tracker, ADDICTION_LABELS } from '@/src/models/tracker';
-import { spacing, borderRadius, typography } from '@/src/theme';
 import { useTranslation } from 'react-i18next';
+import { Text } from '@/src/components/ui/text';
+import { Separator } from '@/src/components/ui/separator';
 import { ResetModal } from './ResetModal';
 
 const MILESTONES_DAYS = [1, 3, 7, 14, 30, 90, 180, 365];
@@ -18,7 +19,7 @@ interface Props {
 
 export function SobrietyCounter({ tracker, isPrimary }: Props) {
   const { t } = useTranslation();
-  const theme = useThemeColors();
+  const colors = useThemeValues();
   const elapsed = useElapsedTime(tracker.startDate);
   const [showReset, setShowReset] = useState(false);
 
@@ -41,16 +42,16 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
   if (!isPrimary) {
     return (
       <Pressable
-        style={[styles.smallCard, { backgroundColor: theme.surface, borderColor: theme.border }]}
+        className="rounded-xl border border-border bg-card p-4 mb-2"
         onLongPress={() => setShowReset(true)}
       >
-        <View style={styles.smallRow}>
+        <View className="flex-row items-center gap-4">
           <Svg width={ringSize} height={ringSize}>
             <Circle
               cx={ringSize / 2}
               cy={ringSize / 2}
               r={radius}
-              stroke={theme.border}
+              stroke={colors.border}
               strokeWidth={strokeWidth}
               fill="none"
             />
@@ -58,7 +59,7 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
               cx={ringSize / 2}
               cy={ringSize / 2}
               r={radius}
-              stroke={theme.primary}
+              stroke={colors.foreground}
               strokeWidth={strokeWidth}
               fill="none"
               strokeDasharray={circumference}
@@ -68,12 +69,12 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
               origin={`${ringSize / 2}, ${ringSize / 2}`}
             />
           </Svg>
-          <View style={styles.smallInfo}>
-            <Text style={[typography.caption, { color: theme.textSecondary }]}>{label}</Text>
-            <Text style={[typography.h3, { color: theme.text }]}>
+          <View className="flex-1">
+            <Text className="text-sm text-muted-foreground">{label}</Text>
+            <Text className="text-lg font-semibold">
               {elapsed.days} {t('home.days')}
             </Text>
-            <Text style={[typography.small, { color: theme.textSecondary }]}>
+            <Text className="text-xs text-muted-foreground">
               {pad(elapsed.hours)}:{pad(elapsed.minutes)}:{pad(elapsed.seconds)}
             </Text>
           </View>
@@ -89,20 +90,20 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
 
   return (
     <Pressable
-      style={[styles.primaryCard, { backgroundColor: theme.surface, borderColor: theme.border }]}
+      className="rounded-2xl border border-border bg-card p-6 items-center mb-6"
       onLongPress={() => setShowReset(true)}
     >
-      <Text style={[typography.caption, styles.label, { color: theme.textSecondary }]}>
+      <Text className="text-sm text-muted-foreground uppercase tracking-widest mb-4">
         {label}
       </Text>
 
-      <View style={styles.ringContainer}>
+      <View className="relative items-center justify-center">
         <Svg width={ringSize} height={ringSize}>
           <Circle
             cx={ringSize / 2}
             cy={ringSize / 2}
             r={radius}
-            stroke={theme.border}
+            stroke={colors.border}
             strokeWidth={strokeWidth}
             fill="none"
           />
@@ -110,7 +111,7 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
             cx={ringSize / 2}
             cy={ringSize / 2}
             r={radius}
-            stroke={theme.primary}
+            stroke={colors.foreground}
             strokeWidth={strokeWidth}
             fill="none"
             strokeDasharray={circumference}
@@ -120,38 +121,38 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
             origin={`${ringSize / 2}, ${ringSize / 2}`}
           />
         </Svg>
-        <View style={styles.counterOverlay}>
-          <Text style={[typography.counter, { color: theme.text }]}>
+        <View className="absolute items-center justify-center">
+          <Text className="text-[48px] font-bold font-mono leading-[56px]">
             {elapsed.days}
           </Text>
-          <Text style={[typography.counterLabel, { color: theme.textSecondary }]}>
+          <Text className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             {t('home.days')}
           </Text>
         </View>
       </View>
 
-      <View style={styles.timeRow}>
-        <TimeUnit value={pad(elapsed.hours)} label={t('home.hours')} theme={theme} />
-        <Text style={[typography.h3, { color: theme.textSecondary }]}>:</Text>
-        <TimeUnit value={pad(elapsed.minutes)} label={t('home.minutes')} theme={theme} />
-        <Text style={[typography.h3, { color: theme.textSecondary }]}>:</Text>
-        <TimeUnit value={pad(elapsed.seconds)} label={t('home.seconds')} theme={theme} />
+      <View className="flex-row items-center gap-2 mt-6">
+        <TimeUnit value={pad(elapsed.hours)} label={t('home.hours')} />
+        <Text className="text-lg font-semibold text-muted-foreground">:</Text>
+        <TimeUnit value={pad(elapsed.minutes)} label={t('home.minutes')} />
+        <Text className="text-lg font-semibold text-muted-foreground">:</Text>
+        <TimeUnit value={pad(elapsed.seconds)} label={t('home.seconds')} />
       </View>
 
-      <View style={styles.statsRow}>
+      <Separator className="mt-6" />
+
+      <View className="flex-row justify-around w-full mt-4">
         <StatItem
           label={t('home.longestStreak')}
           value={`${getLongestStreak(tracker)} ${t('home.days')}`}
-          theme={theme}
         />
         <StatItem
           label={t('home.totalResets')}
           value={`${tracker.resets.length}`}
-          theme={theme}
         />
       </View>
 
-      <Text style={[typography.small, { color: theme.textSecondary, textAlign: 'center', marginTop: spacing.sm }]}>
+      <Text className="text-xs text-muted-foreground text-center mt-2">
         Next milestone: {nextMilestone} {t('home.days')}
       </Text>
 
@@ -164,22 +165,22 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
   );
 }
 
-function TimeUnit({ value, label, theme }: { value: string; label: string; theme: any }) {
+function TimeUnit({ value, label }: { value: string; label: string }) {
   return (
-    <View style={styles.timeUnit}>
-      <Text style={[{ fontSize: 20, fontFamily: 'SpaceMono', fontWeight: '600', color: theme.text }]}>
+    <View className="items-center">
+      <Text className="text-xl font-mono font-semibold">
         {value}
       </Text>
-      <Text style={[typography.small, { color: theme.textSecondary }]}>{label}</Text>
+      <Text className="text-xs text-muted-foreground">{label}</Text>
     </View>
   );
 }
 
-function StatItem({ label, value, theme }: { label: string; value: string; theme: any }) {
+function StatItem({ label, value }: { label: string; value: string }) {
   return (
-    <View style={styles.statItem}>
-      <Text style={[typography.h3, { color: theme.text }]}>{value}</Text>
-      <Text style={[typography.small, { color: theme.textSecondary }]}>{label}</Text>
+    <View className="items-center">
+      <Text className="text-lg font-semibold">{value}</Text>
+      <Text className="text-xs text-muted-foreground">{label}</Text>
     </View>
   );
 }
@@ -191,44 +192,3 @@ function getLongestStreak(tracker: Tracker): number {
   const resetStreaks = tracker.resets.map((r) => r.durationDays);
   return Math.max(currentDays, ...resetStreaks, 0);
 }
-
-const styles = StyleSheet.create({
-  primaryCard: {
-    borderRadius: borderRadius.lg,
-    borderWidth: 1,
-    padding: spacing.lg,
-    alignItems: 'center',
-    marginBottom: spacing.lg,
-  },
-  label: { marginBottom: spacing.md, textTransform: 'uppercase', letterSpacing: 1 },
-  ringContainer: { position: 'relative', alignItems: 'center', justifyContent: 'center' },
-  counterOverlay: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  timeRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-    marginTop: spacing.lg,
-  },
-  timeUnit: { alignItems: 'center' },
-  statsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    marginTop: spacing.lg,
-    paddingTop: spacing.md,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
-  statItem: { alignItems: 'center' },
-  smallCard: {
-    borderRadius: borderRadius.md,
-    borderWidth: 1,
-    padding: spacing.md,
-    marginBottom: spacing.sm,
-  },
-  smallRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
-  smallInfo: { flex: 1 },
-});

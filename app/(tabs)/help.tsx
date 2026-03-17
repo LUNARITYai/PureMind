@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View, Text, Pressable, Linking } from 'react-native';
+import { ScrollView, View, Pressable, Linking } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useThemeColors } from '@/src/hooks/useThemeColors';
-import { spacing, borderRadius, typography } from '@/src/theme';
+import { Text } from '@/src/components/ui/text';
+import { cn } from '@/src/lib/utils';
 
 interface HelpResource {
   name: string;
@@ -62,7 +62,6 @@ const RESOURCES: HelpResource[] = [
 
 export default function HelpScreen() {
   const { t } = useTranslation();
-  const theme = useThemeColors();
 
   const handleCall = (phone: string) => {
     Linking.openURL(`tel:${phone}`);
@@ -74,19 +73,19 @@ export default function HelpScreen() {
 
   return (
     <ScrollView
-      style={{ flex: 1, backgroundColor: theme.background }}
-      contentContainerStyle={styles.content}
+      className="flex-1 bg-background"
+      contentContainerClassName="p-6 pb-12"
     >
-      <Text style={[typography.h1, { color: theme.text, marginBottom: spacing.sm }]}>
+      <Text className="text-[28px] font-bold leading-[34px] mb-2">
         {t('help.title')}
       </Text>
 
       {/* Emergency banner */}
-      <View style={[styles.emergencyBanner, { backgroundColor: theme.danger + '15', borderColor: theme.danger }]}>
-        <Text style={[typography.h3, { color: theme.danger }]}>
+      <View className="rounded-xl border border-destructive bg-destructive/10 p-4 mb-6">
+        <Text className="text-lg font-semibold text-destructive">
           {t('help.emergency')}
         </Text>
-        <Text style={[typography.caption, { color: theme.textSecondary, marginTop: spacing.xs }]}>
+        <Text className="text-sm text-muted-foreground mt-1">
           {t('help.disclaimer')}
         </Text>
       </View>
@@ -94,42 +93,42 @@ export default function HelpScreen() {
       {RESOURCES.map((resource) => (
         <View
           key={resource.name}
-          style={[styles.resourceCard, { backgroundColor: theme.surface, borderColor: theme.border }]}
+          className="rounded-xl border border-border bg-card p-4 mb-2"
         >
-          <View style={styles.resourceHeader}>
-            <Text style={[typography.h3, { color: theme.text, flex: 1 }]}>
+          <View className="flex-row items-center">
+            <Text className="text-lg font-semibold flex-1">
               {resource.name}
             </Text>
             {resource.available24h && (
-              <View style={[styles.badge24h, { backgroundColor: theme.success + '20' }]}>
-                <Text style={[typography.small, { color: theme.success, fontWeight: '600' }]}>
+              <View className="rounded-full bg-foreground/10 px-2 py-0.5">
+                <Text className="text-xs font-semibold text-muted-foreground">
                   {t('help.available24h')}
                 </Text>
               </View>
             )}
           </View>
 
-          <Text style={[typography.body, { color: theme.textSecondary, marginTop: spacing.xs }]}>
+          <Text className="text-base text-muted-foreground mt-1">
             {resource.description}
           </Text>
 
-          <View style={styles.actionRow}>
+          <View className="flex-row gap-2 mt-4">
             {resource.phone && (
               <Pressable
-                style={[styles.actionButton, { backgroundColor: theme.primary }]}
+                className="rounded-full bg-primary px-4 py-2"
                 onPress={() => handleCall(resource.phone!)}
               >
-                <Text style={[typography.caption, { color: '#FFFFFF', fontWeight: '600' }]}>
+                <Text className="text-sm font-semibold text-primary-foreground">
                   📞 {t('help.callNow')}
                 </Text>
               </Pressable>
             )}
             {resource.website && (
               <Pressable
-                style={[styles.actionButton, { backgroundColor: theme.accent }]}
+                className="rounded-full border border-border px-4 py-2"
                 onPress={() => handleWebsite(resource.website!)}
               >
-                <Text style={[typography.caption, { color: '#FFFFFF', fontWeight: '600' }]}>
+                <Text className="text-sm font-semibold text-foreground">
                   🌐 {t('help.visitWebsite')}
                 </Text>
               </Pressable>
@@ -138,42 +137,9 @@ export default function HelpScreen() {
         </View>
       ))}
 
-      <Text style={[typography.caption, { color: theme.textSecondary, textAlign: 'center', marginTop: spacing.lg }]}>
+      <Text className="text-sm text-muted-foreground text-center mt-6">
         You are not alone. Reaching out is a sign of strength.
       </Text>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-  content: { padding: spacing.lg, paddingBottom: spacing.xxl },
-  emergencyBanner: {
-    padding: spacing.md,
-    borderRadius: borderRadius.md,
-    borderWidth: 1,
-    marginBottom: spacing.lg,
-  },
-  resourceCard: {
-    borderRadius: borderRadius.md,
-    borderWidth: 1,
-    padding: spacing.md,
-    marginBottom: spacing.sm,
-  },
-  resourceHeader: { flexDirection: 'row', alignItems: 'center' },
-  badge24h: {
-    paddingVertical: 2,
-    paddingHorizontal: spacing.sm,
-    borderRadius: borderRadius.full,
-  },
-  actionRow: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-    marginTop: spacing.md,
-  },
-  actionButton: {
-    paddingVertical: spacing.sm,
-    paddingHorizontal: spacing.md,
-    borderRadius: borderRadius.full,
-  },
-});
