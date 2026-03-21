@@ -3,9 +3,8 @@ import { differenceInDays } from 'date-fns';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
+import { generateUUID } from '@/src/lib/uuid';
 import { type Tracker, type AddictionType } from '@/src/models/tracker';
-
-const uuid = () => crypto.randomUUID();
 
 interface TrackerState {
   trackers: Tracker[];
@@ -24,7 +23,7 @@ export const useTrackerStore = create<TrackerState>()(
       primaryTrackerId: null,
 
       addTracker: (type, startDate, customLabel) => {
-        const id = uuid();
+        const id = generateUUID();
         const tracker: Tracker = {
           id,
           type,
@@ -53,7 +52,7 @@ export const useTrackerStore = create<TrackerState>()(
               resets: [
                 ...t.resets,
                 {
-                  id: uuid(),
+                  id: generateUUID(),
                   date: now,
                   previousStartDate: t.startDate,
                   note,

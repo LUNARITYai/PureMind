@@ -48,7 +48,8 @@ describe('resetTracker', () => {
 
     resetTracker(id, 'slipped up');
 
-    const tracker = useTrackerStore.getState().trackers.find((t) => t.id === id)!;
+    const tracker = useTrackerStore.getState().trackers.find((t) => t.id === id);
+    if (!tracker) throw new Error('tracker not found');
     expect(tracker.startDate).not.toBe(originalDate);
     expect(tracker.resets).toHaveLength(1);
     expect(tracker.resets[0].previousStartDate).toBe(originalDate);

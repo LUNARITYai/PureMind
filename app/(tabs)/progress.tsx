@@ -20,7 +20,7 @@ export default function ProgressScreen() {
 
   useEffect(() => {
     evaluate(trackers, entries);
-  }, [trackers, entries]);
+  }, [trackers, entries, evaluate]);
 
   return (
     <ScrollView className="flex-1 bg-background" contentContainerClassName="p-6 pb-12">

@@ -17,7 +17,8 @@
     "seconds": "sec",
     "currentStreak": "Current Streak",
     "longestStreak": "Longest Streak",
-    "totalResets": "Fresh Starts"
+    "totalResets": "Fresh Starts",
+    "nextMilestone": "Next milestone: {{days}} days"
   },
   "counter": {
     "setupTitle": "New Tracker",

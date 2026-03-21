@@ -102,7 +102,7 @@ export default function HelpScreen() {
             {resource.phone && (
               <Pressable
                 className="rounded-full bg-primary px-4 py-2"
-                onPress={() => handleCall(resource.phone!)}
+                onPress={() => handleCall(resource.phone ?? '')}
               >
                 <Text className="text-sm font-semibold text-primary-foreground">
                   📞 {t('help.callNow')}
@@ -112,7 +112,7 @@ export default function HelpScreen() {
             {resource.website && (
               <Pressable
                 className="rounded-full border border-border px-4 py-2"
-                onPress={() => handleWebsite(resource.website!)}
+                onPress={() => handleWebsite(resource.website ?? '')}
               >
                 <Text className="text-sm font-semibold text-foreground">
                   🌐 {t('help.visitWebsite')}

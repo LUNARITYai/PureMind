@@ -150,7 +150,7 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
       </View>
 
       <Text className="text-xs text-muted-foreground text-center mt-2">
-        Next milestone: {nextMilestone} {t('home.days')}
+        {t('home.nextMilestone', { days: nextMilestone })}
       </Text>
 
       <ResetModal visible={showReset} onClose={() => setShowReset(false)} trackerId={tracker.id} />
