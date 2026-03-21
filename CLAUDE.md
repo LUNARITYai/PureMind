@@ -11,8 +11,8 @@ PureMind is a React Native mobile app for sobriety tracking and addiction educat
 - `npx expo start` — start the dev server
 - `npx expo start --ios` / `--android` / `--web` — platform-specific
 - `npx tsc --noEmit` — type-check the project
-
-No test framework is set up yet.
+- `npm test` — run unit tests (jest-expo)
+- `npm run test:watch` — run tests in watch mode
 
 ## Architecture
 
@@ -45,6 +45,13 @@ This app serves people in addiction recovery. Language must be empathetic:
 - High-craving states should acknowledge strength and offer coping links.
 - Unearned badges: "You're on your way" — never "Locked."
 
-## Implementation Phases
+## Implementation Status
 
-See `PLAN.md` for the full roadmap. The project is early — Phase 0 (scaffold) and Phase 1 (sobriety counter MVP) are in progress.
+- **Phase 0 — Scaffold**: Done (project structure, stores, i18n, NativeWind v4, base UI components)
+- **Phase 1 — Sobriety Counter MVP**: Partial (TrackerStore, Home screen, SobrietyRing, counter setup, reset flow — detail view TBD)
+- **Phase 2 — Journal & Check-in**: TODO (store exists, tab shows list, but check-in flow and entry detail not built)
+- **Phase 3 — Knowledge Base**: TODO (categories hardcoded in tab, no articles or navigation)
+- **Phase 4 — Progress & Achievements**: Partial (AchievementStore + badge grid, but no charts or animations)
+- **Phase 5 — Help Resources**: Done (6 resources with call/visit buttons)
+- **Phase 6 — Quotes & Onboarding**: TODO
+- **Phase 7 — Polish & Launch**: TODO
