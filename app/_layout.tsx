@@ -1,12 +1,15 @@
 import '../global.css';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useEffect } from 'react';
+
+import { View, useColorScheme as useRNColorScheme } from 'react-native';
+
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import { View } from 'react-native';
-import { useColorScheme as useRNColorScheme } from 'react-native';
+
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useColorScheme } from 'nativewind';
+
 import 'react-native-reanimated';
 import '@/src/i18n';
 import { useSettingsStore } from '@/src/stores/useSettingsStore';
@@ -68,8 +71,7 @@ function RootLayoutNav() {
   const themeSetting = useSettingsStore((s) => s.theme);
   const { setColorScheme } = useColorScheme();
 
-  const isDark =
-    themeSetting === 'system' ? systemScheme === 'dark' : themeSetting === 'dark';
+  const isDark = themeSetting === 'system' ? systemScheme === 'dark' : themeSetting === 'dark';
 
   useEffect(() => {
     setColorScheme(isDark ? 'dark' : 'light');

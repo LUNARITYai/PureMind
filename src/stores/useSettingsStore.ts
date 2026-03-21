@@ -1,6 +1,6 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ThemeMode = 'light' | 'dark' | 'system';
 type Locale = 'en' | 'pl';
@@ -37,6 +37,6 @@ export const useSettingsStore = create<SettingsState>()(
       name: 'puremind:settings',
       storage: createJSONStorage(() => AsyncStorage),
       version: 1,
-    }
-  )
+    },
+  ),
 );

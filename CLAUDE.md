@@ -17,29 +17,37 @@ PureMind is a React Native mobile app for sobriety tracking and addiction educat
 ## Architecture
 
 ### Routing (`app/`)
+
 Expo Router file-based routing. Root layout (`app/_layout.tsx`) handles fonts, splash screen, theme (light/dark), and i18n initialization. Five tabs under `app/(tabs)/`: Home (counter), Learn (knowledge base), Journal (check-ins), Progress (stats/badges), Help (crisis resources). Modal routes: `counter/setup.tsx`, `journal/checkin.tsx`, `settings.tsx`.
 
 ### State Management (`src/stores/`)
+
 Zustand stores with `persist` middleware backed by AsyncStorage. Each store uses a namespaced key (`puremind:trackers`, etc.). Stores: `useTrackerStore`, `useJournalStore`, `useAchievementStore`, `useSettingsStore`.
 
 ### Styling (NativeWind v4)
+
 NativeWind v4 (Tailwind CSS for RN) with `className` props. Config: `tailwind.config.ts`, `global.css` (CSS variables for light/dark), `metro.config.js` (withNativeWind wrapper). Monochromatic black/white palette using shadcn-style CSS variables (background, foreground, card, primary, muted, destructive, border). Use `cn()` from `src/lib/utils.ts` for conditional classes.
 
 ### UI Components (`src/components/ui/`)
+
 Reusable primitives inspired by shadcn/react-native-reusables: Text, Button, Card, Input, Badge, Separator. Use these instead of raw RN components for consistent styling. `Text` component auto-applies `text-foreground` color.
 
 ### Dark Mode
+
 NativeWind's `useColorScheme` is bridged with Zustand `useSettingsStore` in `app/_layout.tsx`. `@react-navigation/native` ThemeProvider handles nav chrome. For SVG elements (which don't support `className`), use `useThemeValues()` hook from `src/hooks/useThemeValues.ts` to get resolved hex colors.
 
 ### i18n (`src/i18n/`)
+
 i18next with react-i18next. English only for v1; Polish planned later. UI strings in `src/i18n/en.json`.
 
 ### Path Aliases
+
 `@/*` maps to project root (configured in `tsconfig.json`). Use `@/src/...` for source imports, `@/assets/...` for assets.
 
 ## UX Guidelines
 
 This app serves people in addiction recovery. Language must be empathetic:
+
 - Never use "failure" for relapses. Use "Starting fresh takes courage."
 - Empty states should feel inviting, not judgmental.
 - High-craving states should acknowledge strength and offer coping links.

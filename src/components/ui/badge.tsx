@@ -1,7 +1,9 @@
 import * as React from 'react';
+
 import { View } from 'react-native';
-import { cn } from '@/src/lib/utils';
+
 import { TextClassContext } from '@/src/components/ui/text';
+import { cn } from '@/src/lib/utils';
 
 const badgeVariants = {
   default: 'bg-primary',
@@ -30,7 +32,7 @@ function Badge({ className, variant = 'default', ...props }: BadgeProps) {
         className={cn(
           'flex-row items-center rounded-full px-2.5 py-0.5',
           badgeVariants[variant],
-          className
+          className,
         )}
         {...props}
       />

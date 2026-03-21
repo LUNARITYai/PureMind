@@ -1,10 +1,11 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { differenceInDays } from 'date-fns';
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+
+import { type Tracker, type AddictionType } from '@/src/models/tracker';
 
 const uuid = () => crypto.randomUUID();
-import { Tracker, AddictionType } from '@/src/models/tracker';
 
 interface TrackerState {
   trackers: Tracker[];
@@ -70,9 +71,7 @@ export const useTrackerStore = create<TrackerState>()(
           return {
             trackers: remaining,
             primaryTrackerId:
-              state.primaryTrackerId === id
-                ? remaining[0]?.id ?? null
-                : state.primaryTrackerId,
+              state.primaryTrackerId === id ? (remaining[0]?.id ?? null) : state.primaryTrackerId,
           };
         });
       },
@@ -89,6 +88,6 @@ export const useTrackerStore = create<TrackerState>()(
       name: 'puremind:trackers',
       storage: createJSONStorage(() => AsyncStorage),
       version: 1,
-    }
-  )
+    },
+  ),
 );

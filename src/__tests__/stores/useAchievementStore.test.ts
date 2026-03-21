@@ -1,6 +1,6 @@
+import { type JournalEntry } from '@/src/models/journal';
+import { type Tracker } from '@/src/models/tracker';
 import { useAchievementStore } from '@/src/stores/useAchievementStore';
-import { Tracker } from '@/src/models/tracker';
-import { JournalEntry } from '@/src/models/journal';
 
 beforeEach(() => {
   useAchievementStore.setState({ earned: [], newlyEarned: [] });
@@ -50,9 +50,7 @@ describe('evaluate', () => {
   });
 
   it('earns journal_5 with 5 entries that have notes', () => {
-    const entries = Array.from({ length: 5 }, () =>
-      makeEntry({ notes: 'Some reflection' })
-    );
+    const entries = Array.from({ length: 5 }, () => makeEntry({ notes: 'Some reflection' }));
     useAchievementStore.getState().evaluate([], entries);
     const { earned } = useAchievementStore.getState();
     expect(earned).toContain('journal_5');

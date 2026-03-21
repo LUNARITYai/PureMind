@@ -1,10 +1,11 @@
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { differenceInDays } from 'date-fns';
+import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
+
 import { ACHIEVEMENTS } from '@/src/models/achievement';
-import { Tracker } from '@/src/models/tracker';
-import { JournalEntry } from '@/src/models/journal';
+import { type JournalEntry } from '@/src/models/journal';
+import { type Tracker } from '@/src/models/tracker';
 
 interface AchievementState {
   earned: string[]; // achievement IDs
@@ -65,6 +66,6 @@ export const useAchievementStore = create<AchievementState>()(
       name: 'puremind:achievements',
       storage: createJSONStorage(() => AsyncStorage),
       version: 1,
-    }
-  )
+    },
+  ),
 );

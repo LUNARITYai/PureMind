@@ -10,7 +10,9 @@ export interface ElapsedTime {
 
 export function useElapsedTime(startDate: string | null): ElapsedTime {
   const [elapsed, setElapsed] = useState<ElapsedTime>(
-    startDate ? calculateElapsed(startDate) : { days: 0, hours: 0, minutes: 0, seconds: 0, totalSeconds: 0 }
+    startDate
+      ? calculateElapsed(startDate)
+      : { days: 0, hours: 0, minutes: 0, seconds: 0, totalSeconds: 0 },
   );
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 

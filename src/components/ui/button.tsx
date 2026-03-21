@@ -1,8 +1,11 @@
 import * as React from 'react';
+
 import { Pressable } from 'react-native';
-import { cn } from '@/src/lib/utils';
-import { TextClassContext } from '@/src/components/ui/text';
+
 import * as Slot from '@rn-primitives/slot';
+
+import { TextClassContext } from '@/src/components/ui/text';
+import { cn } from '@/src/lib/utils';
 
 const buttonVariants = {
   variant: {
@@ -60,7 +63,7 @@ const Button = React.forwardRef<React.ComponentRef<typeof Pressable>, ButtonProp
             buttonVariants.variant[variant],
             buttonVariants.size[size],
             props.disabled && 'opacity-50',
-            className
+            className,
           )}
           ref={ref}
           role="button"
@@ -68,7 +71,7 @@ const Button = React.forwardRef<React.ComponentRef<typeof Pressable>, ButtonProp
         />
       </TextClassContext.Provider>
     );
-  }
+  },
 );
 Button.displayName = 'Button';
 

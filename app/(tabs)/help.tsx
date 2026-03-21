@@ -1,8 +1,10 @@
 import React from 'react';
+
 import { ScrollView, View, Pressable, Linking } from 'react-native';
+
 import { useTranslation } from 'react-i18next';
+
 import { Text } from '@/src/components/ui/text';
-import { cn } from '@/src/lib/utils';
 
 interface HelpResource {
   name: string;
@@ -72,33 +74,19 @@ export default function HelpScreen() {
   };
 
   return (
-    <ScrollView
-      className="flex-1 bg-background"
-      contentContainerClassName="p-6 pb-12"
-    >
-      <Text className="text-[28px] font-bold leading-[34px] mb-2">
-        {t('help.title')}
-      </Text>
+    <ScrollView className="flex-1 bg-background" contentContainerClassName="p-6 pb-12">
+      <Text className="text-[28px] font-bold leading-[34px] mb-2">{t('help.title')}</Text>
 
       {/* Emergency banner */}
       <View className="rounded-xl border border-destructive bg-destructive/10 p-4 mb-6">
-        <Text className="text-lg font-semibold text-destructive">
-          {t('help.emergency')}
-        </Text>
-        <Text className="text-sm text-muted-foreground mt-1">
-          {t('help.disclaimer')}
-        </Text>
+        <Text className="text-lg font-semibold text-destructive">{t('help.emergency')}</Text>
+        <Text className="text-sm text-muted-foreground mt-1">{t('help.disclaimer')}</Text>
       </View>
 
       {RESOURCES.map((resource) => (
-        <View
-          key={resource.name}
-          className="rounded-xl border border-border bg-card p-4 mb-2"
-        >
+        <View key={resource.name} className="rounded-xl border border-border bg-card p-4 mb-2">
           <View className="flex-row items-center">
-            <Text className="text-lg font-semibold flex-1">
-              {resource.name}
-            </Text>
+            <Text className="text-lg font-semibold flex-1">{resource.name}</Text>
             {resource.available24h && (
               <View className="rounded-full bg-foreground/10 px-2 py-0.5">
                 <Text className="text-xs font-semibold text-muted-foreground">
@@ -108,9 +96,7 @@ export default function HelpScreen() {
             )}
           </View>
 
-          <Text className="text-base text-muted-foreground mt-1">
-            {resource.description}
-          </Text>
+          <Text className="text-base text-muted-foreground mt-1">{resource.description}</Text>
 
           <View className="flex-row gap-2 mt-4">
             {resource.phone && (

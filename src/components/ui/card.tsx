@@ -1,7 +1,9 @@
 import * as React from 'react';
+
 import { View } from 'react-native';
-import { cn } from '@/src/lib/utils';
+
 import { TextClassContext } from '@/src/components/ui/text';
+import { cn } from '@/src/lib/utils';
 
 const Card = React.forwardRef<
   React.ComponentRef<typeof View>,

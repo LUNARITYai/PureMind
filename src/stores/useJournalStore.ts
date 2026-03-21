@@ -1,7 +1,8 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { JournalEntry, Mood, TriggerTag } from '@/src/models/journal';
+
+import { type JournalEntry, type Mood, type TriggerTag } from '@/src/models/journal';
 
 const uuid = () => crypto.randomUUID();
 
@@ -45,9 +46,7 @@ export const useJournalStore = create<JournalState>()(
 
       updateEntry: (id, updates) => {
         set((state) => ({
-          entries: state.entries.map((e) =>
-            e.id === id ? { ...e, ...updates } : e
-          ),
+          entries: state.entries.map((e) => (e.id === id ? { ...e, ...updates } : e)),
         }));
       },
 
@@ -65,6 +64,6 @@ export const useJournalStore = create<JournalState>()(
       name: 'puremind:journal',
       storage: createJSONStorage(() => AsyncStorage),
       version: 1,
-    }
-  )
+    },
+  ),
 );

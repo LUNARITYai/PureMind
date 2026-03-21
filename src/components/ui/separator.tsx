@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import { View } from 'react-native';
+
 import { cn } from '@/src/lib/utils';
 
 interface SeparatorProps extends React.ComponentPropsWithoutRef<typeof View> {
@@ -13,11 +15,11 @@ const Separator = React.forwardRef<React.ComponentRef<typeof View>, SeparatorPro
       className={cn(
         'bg-border',
         orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px',
-        className
+        className,
       )}
       {...props}
     />
-  )
+  ),
 );
 Separator.displayName = 'Separator';
 

@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+
 import { View, Pressable } from 'react-native';
+
+import { useTranslation } from 'react-i18next';
 import Svg, { Circle } from 'react-native-svg';
+
+import { Separator } from '@/src/components/ui/separator';
+import { Text } from '@/src/components/ui/text';
 import { useElapsedTime } from '@/src/hooks/useElapsedTime';
 import { useThemeValues } from '@/src/hooks/useThemeValues';
-import { useTrackerStore } from '@/src/stores/useTrackerStore';
-import { Tracker, ADDICTION_LABELS } from '@/src/models/tracker';
-import { useTranslation } from 'react-i18next';
-import { Text } from '@/src/components/ui/text';
-import { Separator } from '@/src/components/ui/separator';
+import { type Tracker, ADDICTION_LABELS } from '@/src/models/tracker';
+
 import { ResetModal } from './ResetModal';
 
 const MILESTONES_DAYS = [1, 3, 7, 14, 30, 90, 180, 365];
@@ -25,9 +28,10 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
 
   const nextMilestone = MILESTONES_DAYS.find((m) => m > elapsed.days) ?? elapsed.days + 30;
   const prevMilestone = [...MILESTONES_DAYS].reverse().find((m) => m <= elapsed.days) ?? 0;
-  const progress = nextMilestone > prevMilestone
-    ? (elapsed.days - prevMilestone) / (nextMilestone - prevMilestone)
-    : 0;
+  const progress =
+    nextMilestone > prevMilestone
+      ? (elapsed.days - prevMilestone) / (nextMilestone - prevMilestone)
+      : 0;
 
   const ringSize = isPrimary ? 200 : 100;
   const strokeWidth = isPrimary ? 10 : 6;
@@ -93,9 +97,7 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
       className="rounded-2xl border border-border bg-card p-6 items-center mb-6"
       onLongPress={() => setShowReset(true)}
     >
-      <Text className="text-sm text-muted-foreground uppercase tracking-widest mb-4">
-        {label}
-      </Text>
+      <Text className="text-sm text-muted-foreground uppercase tracking-widest mb-4">{label}</Text>
 
       <View className="relative items-center justify-center">
         <Svg width={ringSize} height={ringSize}>
@@ -122,9 +124,7 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
           />
         </Svg>
         <View className="absolute items-center justify-center">
-          <Text className="text-[48px] font-bold font-mono leading-[56px]">
-            {elapsed.days}
-          </Text>
+          <Text className="text-[48px] font-bold font-mono leading-[56px]">{elapsed.days}</Text>
           <Text className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             {t('home.days')}
           </Text>
@@ -146,21 +146,14 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
           label={t('home.longestStreak')}
           value={`${getLongestStreak(tracker)} ${t('home.days')}`}
         />
-        <StatItem
-          label={t('home.totalResets')}
-          value={`${tracker.resets.length}`}
-        />
+        <StatItem label={t('home.totalResets')} value={`${tracker.resets.length}`} />
       </View>
 
       <Text className="text-xs text-muted-foreground text-center mt-2">
         Next milestone: {nextMilestone} {t('home.days')}
       </Text>
 
-      <ResetModal
-        visible={showReset}
-        onClose={() => setShowReset(false)}
-        trackerId={tracker.id}
-      />
+      <ResetModal visible={showReset} onClose={() => setShowReset(false)} trackerId={tracker.id} />
     </Pressable>
   );
 }
@@ -168,9 +161,7 @@ export function SobrietyCounter({ tracker, isPrimary }: Props) {
 function TimeUnit({ value, label }: { value: string; label: string }) {
   return (
     <View className="items-center">
-      <Text className="text-xl font-mono font-semibold">
-        {value}
-      </Text>
+      <Text className="text-xl font-mono font-semibold">{value}</Text>
       <Text className="text-xs text-muted-foreground">{label}</Text>
     </View>
   );
@@ -186,9 +177,7 @@ function StatItem({ label, value }: { label: string; value: string }) {
 }
 
 function getLongestStreak(tracker: Tracker): number {
-  const currentDays = Math.floor(
-    (Date.now() - new Date(tracker.startDate).getTime()) / 86400000
-  );
+  const currentDays = Math.floor((Date.now() - new Date(tracker.startDate).getTime()) / 86400000);
   const resetStreaks = tracker.resets.map((r) => r.durationDays);
   return Math.max(currentDays, ...resetStreaks, 0);
 }

@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Modal, View, Pressable } from 'react-native';
-import { useTrackerStore } from '@/src/stores/useTrackerStore';
+
+import { Modal, View } from 'react-native';
+
 import { useTranslation } from 'react-i18next';
-import { Text } from '@/src/components/ui/text';
-import { Input } from '@/src/components/ui/input';
+
 import { Button } from '@/src/components/ui/button';
+import { Input } from '@/src/components/ui/input';
+import { Text } from '@/src/components/ui/text';
+import { useTrackerStore } from '@/src/stores/useTrackerStore';
 
 interface Props {
   visible: boolean;
@@ -27,9 +30,7 @@ export function ResetModal({ visible, onClose, trackerId }: Props) {
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
       <View className="flex-1 justify-center p-6 bg-black/50">
         <View className="rounded-2xl bg-card p-6">
-          <Text className="text-2xl font-semibold text-center">
-            {t('counter.reset.title')}
-          </Text>
+          <Text className="text-2xl font-semibold text-center">{t('counter.reset.title')}</Text>
 
           <Text className="text-base text-muted-foreground text-center mt-4 leading-[22px]">
             {t('counter.reset.message')}
@@ -48,18 +49,10 @@ export function ResetModal({ visible, onClose, trackerId }: Props) {
           />
 
           <View className="flex-row gap-2 mt-6">
-            <Button
-              variant="outline"
-              className="flex-1"
-              onPress={onClose}
-            >
+            <Button variant="outline" className="flex-1" onPress={onClose}>
               <Text>{t('counter.reset.cancel')}</Text>
             </Button>
-            <Button
-              variant="destructive"
-              className="flex-1"
-              onPress={handleReset}
-            >
+            <Button variant="destructive" className="flex-1" onPress={handleReset}>
               <Text>{t('counter.reset.confirm')}</Text>
             </Button>
           </View>

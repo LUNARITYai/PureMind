@@ -1,7 +1,10 @@
 import React from 'react';
+
 import { Pressable } from 'react-native';
+
 import { Tabs, useRouter } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
+
 import { useColorScheme } from 'nativewind';
 
 export default function TabLayout() {
@@ -43,10 +46,7 @@ export default function TabLayout() {
             />
           ),
           headerRight: () => (
-            <Pressable
-              onPress={() => router.push('/settings')}
-              style={{ marginRight: 16 }}
-            >
+            <Pressable onPress={() => router.push('/settings')} style={{ marginRight: 16 }}>
               <SymbolView
                 name={{ ios: 'gearshape', android: 'settings', web: 'settings' }}
                 tintColor={headerTint}

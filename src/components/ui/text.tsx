@@ -1,7 +1,10 @@
 import * as React from 'react';
+
 import { Text as RNText } from 'react-native';
-import { cn } from '@/src/lib/utils';
+
 import * as Slot from '@rn-primitives/slot';
+
+import { cn } from '@/src/lib/utils';
 
 const TextClassContext = React.createContext<string | undefined>(undefined);
 
@@ -20,7 +23,7 @@ const Text = React.forwardRef<React.ComponentRef<typeof RNText>, TextProps>(
         {...props}
       />
     );
-  }
+  },
 );
 Text.displayName = 'Text';
 

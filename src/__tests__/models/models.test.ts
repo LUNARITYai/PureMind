@@ -1,16 +1,12 @@
+import { ACHIEVEMENTS } from '@/src/models/achievement';
 import {
-  AddictionType,
-  ADDICTION_LABELS,
-  ADDICTION_ICONS,
-} from '@/src/models/tracker';
-import {
-  Mood,
-  TriggerTag,
+  type Mood,
+  type TriggerTag,
   MOOD_LABELS,
   MOOD_EMOJIS,
   TRIGGER_LABELS,
 } from '@/src/models/journal';
-import { ACHIEVEMENTS } from '@/src/models/achievement';
+import { type AddictionType, ADDICTION_LABELS, ADDICTION_ICONS } from '@/src/models/tracker';
 
 const ADDICTION_TYPES: AddictionType[] = [
   'alcohol',
