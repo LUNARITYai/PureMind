@@ -12,6 +12,7 @@ import { useColorScheme } from 'nativewind';
 
 import 'react-native-reanimated';
 import '@/src/i18n';
+import { AchievementEvaluationCoordinator } from '@/src/components/AchievementEvaluationCoordinator';
 import { useSettingsStore } from '@/src/stores/useSettingsStore';
 
 export { ErrorBoundary } from 'expo-router';
@@ -80,6 +81,7 @@ function RootLayoutNav() {
   return (
     <View className={isDark ? 'dark flex-1' : 'flex-1'}>
       <ThemeProvider value={isDark ? PureMindDarkTheme : PureMindLightTheme}>
+        <AchievementEvaluationCoordinator />
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen

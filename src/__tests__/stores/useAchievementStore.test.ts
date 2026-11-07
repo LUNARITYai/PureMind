@@ -41,6 +41,15 @@ describe('evaluate', () => {
     expect(newlyEarned).toContain('day_1');
   });
 
+  it('counts archived trackers toward streak achievements', () => {
+    const startDate = new Date(Date.now() - 25 * 60 * 60 * 1000).toISOString();
+    const tracker = { ...makeTracker(startDate), isArchived: true };
+
+    useAchievementStore.getState().evaluate([tracker], []);
+
+    expect(useAchievementStore.getState().earned).toContain('day_1');
+  });
+
   it('earns checkin_7 with 7 entries', () => {
     const entries = Array.from({ length: 7 }, () => makeEntry());
     useAchievementStore.getState().evaluate([], entries);
@@ -62,6 +71,14 @@ describe('evaluate', () => {
     useAchievementStore.getState().evaluate([makeTracker(startDate)], []);
     const { newlyEarned } = useAchievementStore.getState();
     expect(newlyEarned).not.toContain('day_1');
+  });
+
+  it('keeps awards after later evaluations no longer meet their conditions', () => {
+    const entries = Array.from({ length: 7 }, () => makeEntry());
+    useAchievementStore.getState().evaluate([], entries);
+    useAchievementStore.getState().evaluate([], []);
+
+    expect(useAchievementStore.getState().earned).toContain('checkin_7');
   });
 
   it('earns nothing with empty inputs', () => {
