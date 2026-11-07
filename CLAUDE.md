@@ -112,3 +112,17 @@ This app serves people in addiction recovery. Language must be empathetic:
 - **Phase 5 — Help Resources**: ✅ Done (6 resources with call/visit buttons)
 - **Phase 6 — Quotes & Onboarding**: ❌ TODO
 - **Phase 7 — Polish & Launch**: ❌ TODO (i18n Polish translations, animations, app store prep)
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live in GitHub Issues; use `gh`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the five canonical labels: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Use the single-context layout with root `GLOSSARY.md` and `docs/adr/`. See `docs/agents/domain.md`.
